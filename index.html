@@ -15,90 +15,141 @@
 body {
     min-height: 100vh;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: radial-gradient(
-        ellipse at center,
-        #18264b 0%,
-        #090f25 55%,
-        #030611 100%
-    );
     font-family: Georgia, serif;
+    background: #050b19;
+    color: white;
 }
 
 /* Звёздное небо */
-
-#stars {
+#sky {
     position: fixed;
     inset: 0;
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
     pointer-events: none;
 }
 
-.star {
-    position: absolute;
-    background: white;
+/* Ночное свечение */
+.night {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 50% 65%, #26365a55, transparent 60%),
+        linear-gradient(to bottom, #050b1b 0%, #101b35 65%, #17243a 100%);
+}
+
+/* Луна */
+.moon {
+    position: fixed;
+    top: 9%;
+    right: 13%;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
-    animation: twinkle 3s infinite ease-in-out;
+    background: #fff3d6;
+    box-shadow: 0 0 30px #fff0c8aa, 0 0 90px #d8dfff55;
+    z-index: 1;
 }
 
-@keyframes twinkle {
-    0%, 100% {
-        opacity: 0.2;
-        transform: scale(0.7);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.3);
-    }
+/* Далёкие холмы */
+.hill {
+    position: fixed;
+    bottom: 0;
+    width: 120%;
+    left: -10%;
+    height: 32%;
+    border-radius: 50% 50% 0 0;
+    pointer-events: none;
 }
 
-/* Центральная композиция */
+.hill.back {
+    background: #14243a;
+    bottom: 7%;
+    transform: rotate(-4deg);
+    z-index: 1;
+}
 
+.hill.front {
+    background: linear-gradient(#172d36, #071b20);
+    height: 25%;
+    z-index: 1;
+    transform: rotate(3deg);
+}
+
+/* Трава */
+.grass {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 22%;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            80deg,
+            transparent 0 13px,
+            #31523b 14px 16px,
+            transparent 17px 25px
+        );
+    opacity: 0.5;
+    transform-origin: bottom;
+    animation: wind 4s ease-in-out infinite alternate;
+}
+
+@keyframes wind {
+    from { transform: skewX(-2deg); }
+    to { transform: skewX(2deg); }
+}
+
+/* Основная сцена */
 .scene {
     position: relative;
     z-index: 2;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 27px;
+    padding: 20px;
     animation: appear 2s ease;
 }
 
 h1 {
-    color: #f5dce9;
-    font-size: 32px;
+    color: #f8e6ee;
+    font-size: 34px;
     font-weight: normal;
     letter-spacing: 3px;
-    text-shadow: 0 0 20px #e6a8cf;
+    text-align: center;
+    text-shadow: 0 0 25px #e8a9d8;
 }
 
 .subtitle {
-    color: #a9b9db;
+    color: #c1cde5;
     font-size: 14px;
     letter-spacing: 2px;
-    margin-top: -20px;
+    margin-top: -18px;
 }
 
 /* Конверт */
-
 .envelope {
     position: relative;
-    width: 290px;
-    height: 190px;
-    background: #d8bda2;
+    width: 280px;
+    height: 180px;
+    border: none;
     border-radius: 5px;
-    box-shadow:
-        0 0 35px #d8a8c966,
-        0 20px 60px #0009;
-    animation: float 4s ease-in-out infinite;
+    background: #d8bda2;
+    box-shadow: 0 0 35px #d8a8c966, 0 20px 60px #0009;
     cursor: pointer;
-    transition: transform 0.4s;
+    animation: float 4s ease-in-out infinite;
+    transition: filter 0.3s;
 }
 
 .envelope:hover {
-    transform: scale(1.05);
+    filter: brightness(1.12);
 }
 
 .envelope::before {
@@ -106,9 +157,9 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    border-left: 145px solid transparent;
-    border-right: 145px solid transparent;
-    border-top: 110px solid #ead4bd;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 105px solid #ead4bd;
     z-index: 3;
 }
 
@@ -117,25 +168,36 @@ h1 {
     position: absolute;
     bottom: 0;
     left: 0;
-    border-left: 145px solid #c9a98c;
-    border-right: 145px solid #c9a98c;
-    border-top: 100px solid transparent;
+    border-left: 140px solid #c9a98c;
+    border-right: 140px solid #c9a98c;
+    border-top: 90px solid transparent;
     border-bottom: 90px solid #d7b99b;
-    border-radius: 0 0 5px 5px;
     z-index: 2;
 }
-
-/* Сердце */
 
 .heart {
     position: absolute;
     z-index: 5;
-    top: 73px;
+    top: 70px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 35px;
-    filter: drop-shadow(0 0 10px #e88cae);
+    color: #b94d70;
+    font-size: 38px;
+    text-shadow: 0 0 12px #e88cae;
     animation: heartbeat 1.8s infinite;
+    pointer-events: none;
+}
+
+.hint {
+    color: #e3d5ee;
+    font-size: 14px;
+    letter-spacing: 1px;
+    animation: glow 3s infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-13px); }
 }
 
 @keyframes heartbeat {
@@ -143,16 +205,9 @@ h1 {
     50% { transform: translateX(-50%) scale(1.2); }
 }
 
-.hint {
-    color: #d6c5e9;
-    font-size: 14px;
-    letter-spacing: 1px;
-    animation: twinkle 3s infinite;
-}
-
-@keyframes float {
-    0%, 100% { margin-top: 0; }
-    50% { margin-top: -15px; }
+@keyframes glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
 }
 
 @keyframes appear {
@@ -160,59 +215,166 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Окно письма */
+.letter-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px;
+    background: #020510cc;
+    backdrop-filter: blur(9px);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+}
+
+.letter-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.letter {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 38px 30px;
+    border-radius: 8px;
+    color: #493746;
+    background: linear-gradient(135deg, #fff7e9, #f2dfd0);
+    box-shadow: 0 0 60px #e5b5d455;
+    transform: translateY(35px) scale(0.94);
+    transition: transform 0.6s ease;
+}
+
+.letter-overlay.show .letter {
+    transform: translateY(0) scale(1);
+}
+
+.letter h2 {
+    text-align: center;
+    font-size: 29px;
+    font-weight: normal;
+    color: #a34e75;
+    margin-bottom: 25px;
+}
+
+.letter p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 17px;
+}
+
+.signature {
+    text-align: right;
+    color: #a34e75;
+    font-style: italic;
+    margin-top: 25px;
+}
+
+.close {
+    position: sticky;
+    float: right;
+    top: 0;
+    border: none;
+    background: #a34e75;
+    color: white;
+    padding: 9px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
 @media (max-width: 400px) {
-    .envelope {
-        transform: scale(0.9);
-    }
-    h1 {
-        font-size: 27px;
-    }
+    h1 { font-size: 28px; }
+    .envelope { transform: scale(0.9); }
+    .letter { padding: 30px 22px; }
+    .letter p { font-size: 15px; }
+    .moon { width: 55px; height: 55px; }
 }
 </style>
 </head>
 
 <body>
 
-<div id="stars"></div>
+<div class="night"></div>
+<canvas id="sky"></canvas>
 
-<div class="scene">
+<div class="moon"></div>
+<div class="hill back"></div>
+<div class="hill front"></div>
+<div class="grass"></div>
+
+<main class="scene">
     <h1>Для Нади ❤️</h1>
     <p class="subtitle">A little letter for you</p>
 
-    <div class="envelope" onclick="openLetter()">
-        <div class="heart">♥</div>
-    </div>
+    <button class="envelope" onclick="openLetter()" aria-label="Открыть письмо">
+        <span class="heart">♥</span>
+    </button>
 
     <p class="hint">Нажми на конверт ✨</p>
+</main>
+
+<div class="letter-overlay" id="letterOverlay" onclick="closeOutside(event)">
+    <article class="letter">
+        <button class="close" onclick="closeLetter()">Закрыть ✕</button>
+
+        <h2>Для тебя, Надя ❤️</h2>
+
+        <p>
+            Надя, спасибо, что ты у меня есть.
+            Ты самое лучшее чудо, которое присутствует в моей жизни. 💋
+        </p>
+
+        <p>
+            Я очень ценю тебя, твою заботу, твою нежность
+            и каждую минуту, которую мы проводим вместе.
+            Ты умеешь делать мои дни лучше даже самыми маленькими мелочами.
+        </p>
+
+        <p>
+            Мне хочется, чтобы ты всегда улыбалась и никогда
+            не сомневалась в том, насколько ты дорога мне.
+            Я счастлив, что наши дороги пересеклись.
+        </p>
+
+        <p>
+            Спасибо за твоё тепло, за твои слова и за то,
+            что ты именно такая, какая есть.
+            Не переставай быть собой, ведь именно такой ты мне и дорога.
+        </p>
+
+        <p>
+            Я очень сильно тебя люблю, Надя. ❤️
+        </p>
+
+        <p class="signature">С любовью ❤️</p>
+    </article>
 </div>
 
 <script>
-// Создание звёздного неба
-
-const stars = document.getElementById("stars");
-
-for (let i = 0; i < 130; i++) {
-    const star = document.createElement("div");
-    star.className = "star";
-
-    const size = Math.random() * 3 + 1;
-
-    star.style.width = size + "px";
-    star.style.height = size + "px";
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 100 + "%";
-    star.style.animationDelay = Math.random() * 4 + "s";
-    star.style.animationDuration =
-        (Math.random() * 3 + 2) + "s";
-
-    stars.appendChild(star);
+function openLetter() {
+    document.getElementById("letterOverlay").classList.add("show");
 }
 
-function openLetter() {
-    alert("Скоро здесь появится твоё письмо, Надя ❤️");
+function closeLetter() {
+    document.getElementById("letterOverlay").classList.remove("show");
+}
+
+function closeOutside(event) {
+    if (event.target.id === "letterOverlay") {
+        closeLetter();
+    }
 }
 </script>
 
+<script src="canvas.js"></script>
+
 </body>
-  </html>
-  
+    </html>
+    
